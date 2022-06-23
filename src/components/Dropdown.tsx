@@ -1,8 +1,8 @@
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { css } from '../styles/StyleDefault';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
+
+import { css } from '../styles/StyleDefault';
 import { StyledArrow, StyledContent, StyledLabel } from '../styles/DropdownStyle';
 
 

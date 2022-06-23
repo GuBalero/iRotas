@@ -29,12 +29,7 @@ function DropdownItem(props: PropsType) {
         userSelect: 'none',
         cursor: 'pointer',
 
-        '&[data-disabled]': {
-            color: '$gray8',
-            pointerEvents: 'none',
-        },
-
-        '&:focus': {
+        '&:hover': {
             backgroundColor: '$gray9',
             color: '$gray1',
         },
@@ -43,14 +38,14 @@ function DropdownItem(props: PropsType) {
             edit: {
                 true: {
                     '&:hover': {
-                        backgroundColor: '$amber9'
+                        backgroundColor: '$amber9',
                     }
                 },
             },
             remove: {
                 true: {
                     '&:hover': {
-                        backgroundColor: '$tomato9'
+                        backgroundColor: '$tomato9',
                     }
                 }
             }
@@ -63,7 +58,6 @@ function DropdownItem(props: PropsType) {
         paddingLeft: 20,
         color: '$gray11',
         ':focus > &': { color: '$gray1' },
-        '[data-disabled] &': { color: '$gray8' },
     });
 
     return (

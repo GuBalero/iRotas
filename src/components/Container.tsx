@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { css } from "../styles/style-config"
+import { css } from "../styles/StyleDefault"
 
 interface PropsType {
     height: string,
@@ -12,7 +12,7 @@ function Container(props:PropsType){
     const container = css({
         width: props.width,
         height: props.height,
-        backdropFilter: 'blur(5px) saturate(200%)',
+        backdropFilter: 'blur(0) saturate(200%)',
         borderRadius: "$1",
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
         marginLeft: '$4',

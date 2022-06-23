@@ -1,5 +1,5 @@
 import Rotas from './pages/rotas';
-import { globalStyles } from './styles/style-config';
+import { globalStyles } from './styles/StyleDefault';
 
 
 

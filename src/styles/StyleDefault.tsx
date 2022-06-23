@@ -1,5 +1,5 @@
 import { createStitches } from '@stitches/react';
-import { mint, tomato, amber, indigo } from '@radix-ui/colors';
+import { mint, tomato, amber, indigo, gray } from '@radix-ui/colors';
 
 export const { css, globalCss } = createStitches({
     theme: {
@@ -7,7 +7,8 @@ export const { css, globalCss } = createStitches({
             ...mint,
             ...tomato,
             ...amber,
-            ...indigo
+            ...indigo,
+            ...gray
         },
         sizes: {
             1: '5px',
@@ -71,7 +72,6 @@ export const globalStyles = globalCss({
         margin: 0,
         padding: 0,
         boxSizing: 'border-box',
-        backgroundColor: '$mint2',
         fontFamily: '$poppins',
         fontWeight: '$1'
     }

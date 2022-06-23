@@ -1,4 +1,4 @@
-import { css } from "../styles/style-config"
+import { css } from "../styles/StyleDefault"
 
 type PropsType = {
     children: React.ReactNode
@@ -12,23 +12,25 @@ function Button(props:PropsType){
         borderRadius: '$1',
         transition: 'all ease 0.2s',
         fontWeight: '$3',
-        fontSize: '$5',
+        fontSize: '$6',
         
         variants: {
             color: {
-                green: {
-                    color: '$indigo12',
+                blue: {
+                    color: '$indigo5',
                     backgroundColor: '$indigo9',
                     '&:hover': {
                         backgroundColor: '$indigo10'
                     },
+
+
                 }
             }
         }
     })
 
     return(
-        <button className={button({color: 'green'})}>
+        <button className={button({color: 'blue'})}>
             {props.children}
         </button>
     )

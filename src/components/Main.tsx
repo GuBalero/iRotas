@@ -1,4 +1,4 @@
-import { css } from "../styles/style-config"
+import { css } from "../styles/StyleDefault"
 import Waves from "../content/imgs/bg.svg"
 
 function Main(props:any){

@@ -1,20 +1,12 @@
+import { useState } from "react"
 import { css } from "../styles/StyleDefault"
+import Opcoes from "./Opcoes"
 
-import Local1 from '../content/imgs/local1.png'
-import Local2 from '../content/imgs/local2.png'
-import Local3 from '../content/imgs/local3.png'
-import Local4 from '../content/imgs/local4.png'
-import Local5 from '../content/imgs/local5.png'
-import Local6 from '../content/imgs/local6.png'
-import Local7 from '../content/imgs/local7.png'
-import Dropdown from "./Dropdown"
-import DropdownItem from "./DropdownItem"
-import { faPen, faTrashCan } from "@fortawesome/free-solid-svg-icons"
 
 type PropsType = {
-    active?: boolean,
-    data: ItemType
-    click: Function
+    ativo: boolean,
+    data: ItemType,
+    setState: Function
 }
 
 type ItemType = {
@@ -30,15 +22,6 @@ type LocalType = {
     longitude: number
 }
 
-const mapImages = new Map()
-mapImages.set('local1', Local1)
-mapImages.set('local2', Local2)
-mapImages.set('local3', Local3)
-mapImages.set('local4', Local4)
-mapImages.set('local5', Local5)
-mapImages.set('local6', Local6)
-mapImages.set('local7', Local7)
-
 function Item(props: PropsType) {
 
     const item = css({
@@ -50,9 +33,13 @@ function Item(props: PropsType) {
         display: "flex",
         alignItems: "center",
         position: "relative",
-        
+
         '&:hover': {
             background: '$mint4'
+        },
+
+        '&:hover > div':{
+            opacity: 1,
         },
 
         variants: {
@@ -78,26 +65,27 @@ function Item(props: PropsType) {
         fontWeight: '$3',
         color: '$mint12',
         marginLeft: '$3',
-        maxWidth:'70%',
+        maxWidth: '55%',
         overflow: "hidden",
         textOverflow: "ellipsis"
     })
 
+    function click(){
+        props.setState(props.data.id)
+    }   
+
     return (
-        <li className={item({ active: props.active })} >
+        <li className={item({ active: props.ativo })} onClick={click}>
             <img
-                src={mapImages.get(props.data.img)}
+                src={props.data.img}
                 alt="Casa"
                 className={img()} />
-            
+
             <h1 className={titulo()}>
                 {props.data.titulo}
             </h1>
 
-            <Dropdown label="Opções">
-                <DropdownItem titulo="Editar" icon={faPen} edit={true} />
-                <DropdownItem titulo="Remover" icon={faTrashCan} remove={true} />
-            </Dropdown>
+            <Opcoes/>
         </li>
     )
 }

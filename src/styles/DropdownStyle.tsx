@@ -1,4 +1,4 @@
-import { keyframes } from '@stitches/react';
+import { keyframes, styled } from '@stitches/react';
 import { css } from './StyleDefault';
 
 export const slideUpAndFade = keyframes({
@@ -22,7 +22,7 @@ export const slideLeftAndFade = keyframes({
 });
 
 export const StyledContent = css({
-    minWidth: 220,
+    minWidth: 200,
     backgroundColor: 'white',
     borderRadius: 6,
     padding: 5,
@@ -51,4 +51,50 @@ export const StyledLabel = css({
 
 export const StyledArrow = css({
     fill: 'white',
+});
+
+export const StyledItem = css({
+    all: 'unset',
+    fontSize: '$3',
+    lineHeight: 1,
+    color: '$gray11',
+    borderRadius: 3,
+    display: 'flex',
+    alignItems: 'center',
+    height: 25,
+    width: 'calc(100% - 30px)',
+    padding: '0 5px',
+    position: 'relative',
+    paddingLeft: 25,
+    userSelect: 'none',
+    cursor: 'pointer',
+
+    '&:hover': {
+        backgroundColor: '$gray9',
+        color: '$gray1',
+    },
+
+    variants: {
+        edit: {
+            true: {
+                '&:hover': {
+                    backgroundColor: '$amber10',
+                }
+            },
+        },
+        remove: {
+            true: {
+                '&:hover': {
+                    backgroundColor: '$tomato9',
+                }
+            }
+        }
+    }
+});
+
+export const RightSlot = styled('div', {
+    marginLeft: 'auto',
+    paddingLeft: 20,
+    color: '$gray11',
+    ':hover > &': { color: '$gray1' },
 });

@@ -1,36 +1,54 @@
+import { MouseEventHandler } from "react"
 import { css } from "../styles/StyleDefault"
 
 type PropsType = {
-    children: React.ReactNode
+    children: React.ReactNode,
+    onClick?: MouseEventHandler,
+    habilitado?: boolean
 }
 
-function Button(props:PropsType){
-
-    const button = css({
-        cursor: 'pointer',
-        border: 'none',
-        borderRadius: '$1',
-        transition: 'all ease 0.2s',
-        fontWeight: '$3',
-        fontSize: '$6',
-        
-        variants: {
-            color: {
-                blue: {
-                    color: '$indigo5',
-                    backgroundColor: '$indigo9',
-                    '&:hover': {
-                        backgroundColor: '$indigo10'
-                    },
-
-
-                }
+export const StyledButton = css({
+    cursor: 'pointer',
+    border: 'none',
+    borderRadius: '$1',
+    transition: 'all ease 0.2s',
+    fontSize: '$5',
+    width: '100%',
+    padding: '$1',
+    
+    variants: {
+        color: {
+            blue: {
+                color: '$indigo5',
+                backgroundColor: '$indigo9',
+                '&:hover': {
+                    backgroundColor: '$indigo10'
+                },
+            }
+        },
+        font: {
+            light: { fontWeight: '$1', },
+            medium: { fontWeight: '$2', },
+            bold: { fontWeight: '$3', },
+        },
+        habilitado:{
+            false:{
+                pointerEvents: 'none',
+                color: '$gray9',
+                backgroundColor: '$gray8'
             }
         }
-    })
+    },
 
-    return(
-        <button className={button({color: 'blue'})}>
+    defaultVariants: {
+        color: 'blue',
+        font: 'bold'
+    }
+})
+
+function Button(props: PropsType) {
+    return (
+        <button className={StyledButton({habilitado: props.habilitado})} onClick={props.onClick}>
             {props.children}
         </button>
     )

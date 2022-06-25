@@ -8,7 +8,7 @@ import Local7 from '../content/imgs/local7.png'
 import Globo from '../content/imgs/globo.png'
 import Location from '../content/imgs/pin.png'
 
-import { faXmark } from "@fortawesome/free-solid-svg-icons"
+import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import * as Dialog from "@radix-ui/react-dialog"
 import { CloseButton, Fieldset, Input, Label, StyledContent, StyledDescription, StyledOverlay, StyledTitle } from "../styles/ModalStyle"
@@ -109,7 +109,9 @@ function ModalCadastrar(props: PropsType) {
 
     return (
         <Dialog.Root onOpenChange={LimparForm}>
-            <Dialog.Trigger className={StyledButton()}>+</Dialog.Trigger>
+            <Dialog.Trigger className={StyledButton()}>
+                <FontAwesomeIcon icon={faPlus} />
+            </Dialog.Trigger>
 
             <Dialog.Portal>
                 <Dialog.Overlay className={StyledOverlay()} />
@@ -119,12 +121,12 @@ function ModalCadastrar(props: PropsType) {
 
                     <Fieldset>
                         <Label htmlFor="descricao">Descrição</Label>
-                        <Input id="descricao" placeholder="Ex: Casa" onChange={(e) => setDescricao(e.target.value)} value={descricao}/>
+                        <Input id="descricao" placeholder="Ex: Casa" onChange={(e) => setDescricao(e.target.value)} value={descricao} autoComplete="off" />
                     </Fieldset>
 
                     <Fieldset>
                         <Label htmlFor="partida">Partida:</Label>
-                        <Input id="partida" placeholder="Ex: Rua Partida, 10" onChange={(e) => setPartida(e.target.value)} value={partida}/>
+                        <Input id="partida" placeholder="Ex: Rua Partida, 10" onChange={(e) => setPartida(e.target.value)} value={partida} />
                         <img
                             src={Location}
                             alt="Pin de localização"
@@ -136,7 +138,7 @@ function ModalCadastrar(props: PropsType) {
 
                     <Fieldset>
                         <Label htmlFor="destino">Destino:</Label>
-                        <Input id="destino" placeholder="Ex: Rua Destino, 20" onChange={(e) => setDestino(e.target.value)} value={destino}/>
+                        <Input id="destino" placeholder="Ex: Rua Destino, 20" onChange={(e) => setDestino(e.target.value)} value={destino} />
                         <img
                             src={Location}
                             alt="Pin de localização"
@@ -188,7 +190,6 @@ function ModalCadastrar(props: PropsType) {
                         className={StyledButton({ habilitado: descricao !== "" && partida !== "" && destino !== "" && imagem !== "" })}
                         onClick={Cadastrar}
                     >
-
                         Cadastrar
                     </Dialog.Close>
 

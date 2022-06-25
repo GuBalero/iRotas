@@ -26,49 +26,21 @@ function Rotas() {
     const [rotas, setRotas] = useState<ItemType[]>(getItens())
     const [selecionado, setSelecionado] = useState(-1)
 
-    var item = {
-        id: 0,
-        img: Local1,
-        titulo: "trabalho",
-        partida: {
-            latitude: -23.54878745465809,
-            longitude: -46.41712640394394
-        },
-        destino: {
-            latitude: -23.64521870355026,
-            longitude: -46.51046353093108
-        },
-    }
-
-    var item2 = {
-        id: 1,
-        img: Local1,
-        titulo: "casa",
-        partida: {
-            latitude: -23.54878745465809,
-            longitude: -46.41712640394394
-        },
-        destino: {
-            latitude: -23.64521870355026,
-            longitude: -46.51046353093108
-        },
-    }
-
-    function getItens():ItemType[] {
+    function getItens(): ItemType[] {
         let storage = localStorage.getItem("rotas")
-        if(storage != null){
+        if (storage != null) {
             return JSON.parse(storage)
         }
 
         return []
     }
 
-    function setItens(itens:any){
+    function setItens(itens: any) {
         localStorage.setItem("rotas", JSON.stringify(itens))
         setRotas(getItens)
     }
-    
-    function addItem(item: ItemType){
+
+    function addItem(item: ItemType) {
         let itens = rotas
         itens.push(item)
         setItens(itens)
@@ -77,11 +49,16 @@ function Rotas() {
     return (
         <Main>
             <Container width="30%" height="100%">
-                <ModalCadastrar cadastrar={addItem}/>
+                <ModalCadastrar cadastrar={addItem} />
                 <Lista>
                     {
                         rotas.map(rota => (
-                                <Item key={rota.id} data={rota} ativo={selecionado == rota.id} setState={setSelecionado} />
+                            <Item
+                                key={rota.id}
+                                data={rota}
+                                ativo={selecionado == rota.id}
+                                setSelecionado={setSelecionado}
+                            />
                         ))
                     }
                 </Lista>

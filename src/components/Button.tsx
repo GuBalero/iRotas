@@ -15,14 +15,22 @@ export const StyledButton = css({
     fontSize: '$5',
     width: '100%',
     padding: '$1',
+    marginTop: '$5',
     
     variants: {
         color: {
             blue: {
-                color: '$indigo5',
+                color: '$indigo4',
                 backgroundColor: '$indigo9',
                 '&:hover': {
                     backgroundColor: '$indigo10'
+                },
+            },
+            red:{
+                color: '$tomato4',
+                backgroundColor: '$tomato9',
+                '&:hover': {
+                    backgroundColor: '$tomato10'
                 },
             }
         },

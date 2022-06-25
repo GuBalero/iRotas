@@ -6,7 +6,7 @@ import Opcoes from "./Opcoes"
 type PropsType = {
     ativo: boolean,
     data: ItemType,
-    setState: Function
+    setSelecionado: Function
 }
 
 type ItemType = {
@@ -38,7 +38,7 @@ function Item(props: PropsType) {
             background: '$mint4'
         },
 
-        '&:hover > div':{
+        '&:hover > div': {
             opacity: 1,
         },
 
@@ -64,15 +64,19 @@ function Item(props: PropsType) {
         fontSize: '$4',
         fontWeight: '$3',
         color: '$mint12',
-        marginLeft: '$3',
-        maxWidth: '55%',
+        width: '70%',
         overflow: "hidden",
-        textOverflow: "ellipsis"
+        textOverflow: "ellipsis",
+        // position: 'absolute',
+        // left: 'calc($10 + $9)',
+        transition: 'all ease 0.2s',
+        wordSpacing: 1,
+        letterSpacing: -0.5
     })
 
-    function click(){
-        props.setState(props.data.id)
-    }   
+    function click() {
+        props.setSelecionado(props.data.id)
+    }
 
     return (
         <li className={item({ active: props.ativo })} onClick={click}>
@@ -85,7 +89,7 @@ function Item(props: PropsType) {
                 {props.data.titulo}
             </h1>
 
-            <Opcoes/>
+            <Opcoes />
         </li>
     )
 }

@@ -1,7 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { css } from "../styles/StyleDefault"
-import { faGear, faPen, faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { faGear, faPen, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react"
+import { red } from "@radix-ui/colors/types/dark/red"
+import * as Dialog from "@radix-ui/react-dialog"
+import { CloseButton, StyledContent, StyledOverlay, StyledTitle } from "../styles/ModalStyle"
+import { StyledButton } from "./Button"
 
 function Opcoes() {
 
@@ -13,12 +17,11 @@ function Opcoes() {
         padding: '$2',
         width: '$8',
         height: '$8',
-        display: 'flex',
+        display: 'none',
         alignItems: 'center',
         backgroundColor: 'transparent',
-        top: 'calc(50% - $4)',
         transition: 'all ease 0.1s',
-        
+
         variants: {
             type: {
                 options: {
@@ -26,20 +29,17 @@ function Opcoes() {
                     opacity: 1,
                     borderRadius: '$3',
                 },
-                remove:{
-                    '&:hover':{color: '$tomato9'}
+                remove: {
+                    '&:hover': { color: '$tomato9' }
                 },
-                edit:{
-                    '&:hover':{color: '$amber10'}
+                edit: {
+                    '&:hover': { color: '$amber10' }
                 }
             }
         }
     })
 
     const opcoes = css({
-        position: 'absolute',
-        right: '$2',
-        float: 'left',
         transition: 'all ease 0.2s',
         borderRadius: '$3',
         display: 'flex',
@@ -57,8 +57,12 @@ function Opcoes() {
             display: 'flex',
         },
 
-        '&:hover > button.options':{
+        '&:hover > button.options': {
             backgroundColor: '$mint7',
+        },
+
+        '&:hover ~ h1': {
+            width: '53%',
         }
     })
 
@@ -68,13 +72,31 @@ function Opcoes() {
                 <FontAwesomeIcon icon={faGear} />
             </button>
 
-            <button className={opcao({type: "edit"})}>
+            <button className={opcao({ type: "edit" })}>
                 <FontAwesomeIcon icon={faPen} />
             </button>
 
-            <button className={opcao({type: "remove"})}>
-                <FontAwesomeIcon icon={faTrashCan} />
-            </button>
+            <Dialog.Root>
+                <Dialog.Trigger className={opcao({ type: "remove" })}>
+                    <FontAwesomeIcon icon={faTrashCan} />
+                </Dialog.Trigger>
+                <Dialog.Portal>
+                    <Dialog.Overlay className={StyledOverlay()} />
+                    <Dialog.Content className={StyledContent()}>
+                        <Dialog.Title className={StyledTitle()}>Remover</Dialog.Title>
+                        <Dialog.Description>Realmente deseja remover essa rota?</Dialog.Description>
+                        <Dialog.Close
+                            className={StyledButton({ color: 'red' })}>
+                            Confirmar
+                        </Dialog.Close>
+                        <Dialog.Close asChild>
+                            <CloseButton>
+                                <FontAwesomeIcon icon={faXmark} />
+                            </CloseButton>
+                        </Dialog.Close>
+                    </Dialog.Content>
+                </Dialog.Portal>
+            </Dialog.Root>
         </div>
     )
 }

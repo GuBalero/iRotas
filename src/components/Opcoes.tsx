@@ -1,4 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon, Props } from "@fortawesome/react-fontawesome"
 import { css } from "../styles/StyleDefault"
 import { faGear, faPen, faTrashCan, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react"
@@ -6,8 +6,28 @@ import { red } from "@radix-ui/colors/types/dark/red"
 import * as Dialog from "@radix-ui/react-dialog"
 import { CloseButton, StyledContent, StyledOverlay, StyledTitle } from "../styles/ModalStyle"
 import { StyledButton } from "./Button"
+import ModalCadastrar from "./ModalCadastrar"
 
-function Opcoes() {
+type PropsType = {
+    data: ItemType,
+    removeItem: Function,
+    editItem: Function
+}
+
+type ItemType = {
+    id: number,
+    img: string,
+    titulo: string,
+    partida: LocalType,
+    destino: LocalType
+}
+
+type LocalType = {
+    latitude: number,
+    longitude: number
+}
+
+function Opcoes(props: PropsType) {
 
     const opcao = css({
         border: 'none',
@@ -47,6 +67,8 @@ function Opcoes() {
         maxWidth: '$8',
         overflow: 'hidden',
         opacity: 0,
+        position: 'absolute',
+        right: '$2',
 
         '&:hover': {
             backgroundColor: '$gray7',
@@ -72,9 +94,11 @@ function Opcoes() {
                 <FontAwesomeIcon icon={faGear} />
             </button>
 
-            <button className={opcao({ type: "edit" })}>
-                <FontAwesomeIcon icon={faPen} />
-            </button>
+            <ModalCadastrar dataEditar={props.data} editar={props.editItem}>
+                <Dialog.Trigger className={opcao({ type: "edit" })}>
+                    <FontAwesomeIcon icon={faPen} />
+                </Dialog.Trigger>
+            </ModalCadastrar>
 
             <Dialog.Root>
                 <Dialog.Trigger className={opcao({ type: "remove" })}>
@@ -86,7 +110,9 @@ function Opcoes() {
                         <Dialog.Title className={StyledTitle()}>Remover</Dialog.Title>
                         <Dialog.Description>Realmente deseja remover essa rota?</Dialog.Description>
                         <Dialog.Close
-                            className={StyledButton({ color: 'red' })}>
+                            className={StyledButton({ color: 'red' })}
+                            onClick={() => props.removeItem(props.data.id)}
+                        >
                             Confirmar
                         </Dialog.Close>
                         <Dialog.Close asChild>

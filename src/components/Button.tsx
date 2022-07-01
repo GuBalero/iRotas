@@ -16,7 +16,7 @@ export const StyledButton = css({
     width: '100%',
     padding: '$1',
     marginTop: '$5',
-    
+
     variants: {
         color: {
             blue: {
@@ -26,11 +26,18 @@ export const StyledButton = css({
                     backgroundColor: '$indigo10'
                 },
             },
-            red:{
+            red: {
                 color: '$tomato4',
                 backgroundColor: '$tomato9',
                 '&:hover': {
                     backgroundColor: '$tomato10'
+                },
+            },
+            yellow: {
+                color: '$amber12',
+                backgroundColor: '$amber9',
+                '&:hover': {
+                    backgroundColor: '$amber10'
                 },
             }
         },
@@ -39,14 +46,24 @@ export const StyledButton = css({
             medium: { fontWeight: '$2', },
             bold: { fontWeight: '$3', },
         },
-        habilitado:{
-            false:{
+        habilitado: {
+            false: {
                 pointerEvents: 'none',
-                color: '$gray9',
+                color: '$gray11',
                 backgroundColor: '$gray8'
             }
         }
     },
+
+    compoundVariants: [{
+        color: "yellow",
+        habilitado: false,
+        css: {
+            pointerEvents: 'none',
+            color: '$gray11',
+            backgroundColor: '$gray8'
+        }
+    }],
 
     defaultVariants: {
         color: 'blue',
@@ -56,7 +73,7 @@ export const StyledButton = css({
 
 function Button(props: PropsType) {
     return (
-        <button className={StyledButton({habilitado: props.habilitado})} onClick={props.onClick}>
+        <button className={StyledButton({ habilitado: props.habilitado })} onClick={props.onClick}>
             {props.children}
         </button>
     )

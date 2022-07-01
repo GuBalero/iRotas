@@ -1,12 +1,13 @@
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as Dialog from "@radix-ui/react-dialog";
 import { useState } from "react";
-import Button from "../components/Button";
+import { StyledButton } from "../components/Button";
 import Container from "../components/Container";
 import Item from "../components/Item";
 import Lista from "../components/Lista";
 import Main from "../components/Main";
 import ModalCadastrar from "../components/ModalCadastrar";
-
-import Local1 from '../content/imgs/local1.png'
 
 type ItemType = {
     id: number,
@@ -46,10 +47,25 @@ function Rotas() {
         setItens(itens)
     }
 
+    function removeItem(id: number) {
+        let itens = rotas
+        itens = itens.filter(item => item.id !== id)
+        setItens(itens)
+    }
+
+    function editItem() {
+        let itens = rotas
+        setItens(itens)
+    }
+
     return (
         <Main>
             <Container width="30%" height="100%">
-                <ModalCadastrar cadastrar={addItem} />
+                <ModalCadastrar cadastrar={addItem}>
+                    <Dialog.Trigger className={StyledButton()}>
+                        <FontAwesomeIcon icon={faPlus} />
+                    </Dialog.Trigger>
+                </ModalCadastrar>
                 <Lista>
                     {
                         rotas.map(rota => (
@@ -58,6 +74,8 @@ function Rotas() {
                                 data={rota}
                                 ativo={selecionado == rota.id}
                                 setSelecionado={setSelecionado}
+                                removeItem={removeItem}
+                                editItem={editItem}
                             />
                         ))
                     }

@@ -6,7 +6,9 @@ import Opcoes from "./Opcoes"
 type PropsType = {
     ativo: boolean,
     data: ItemType,
-    setSelecionado: Function
+    setSelecionado: Function,
+    removeItem: Function,
+    editItem: Function
 }
 
 type ItemType = {
@@ -67,8 +69,8 @@ function Item(props: PropsType) {
         width: '70%',
         overflow: "hidden",
         textOverflow: "ellipsis",
-        // position: 'absolute',
-        // left: 'calc($10 + $9)',
+        position: 'absolute',
+        left: 'calc($10 + $9)',
         transition: 'all ease 0.2s',
         wordSpacing: 1,
         letterSpacing: -0.5
@@ -80,6 +82,12 @@ function Item(props: PropsType) {
 
     return (
         <li className={item({ active: props.ativo })} onClick={click}>
+            <Opcoes 
+                data={props.data}
+                removeItem={props.removeItem}
+                editItem={props.editItem}
+            />
+            
             <img
                 src={props.data.img}
                 alt="Casa"
@@ -89,7 +97,6 @@ function Item(props: PropsType) {
                 {props.data.titulo}
             </h1>
 
-            <Opcoes />
         </li>
     )
 }

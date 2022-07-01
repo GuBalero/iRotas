@@ -8,18 +8,35 @@ import Local7 from '../content/imgs/local7.png'
 import Globo from '../content/imgs/globo.png'
 import Location from '../content/imgs/pin.png'
 
-import { faXmark, faPlus } from "@fortawesome/free-solid-svg-icons"
+import { faXmark } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import * as Dialog from "@radix-ui/react-dialog"
 import { CloseButton, Fieldset, Input, Label, StyledContent, StyledDescription, StyledOverlay, StyledTitle } from "../styles/ModalStyle"
-import Button, { StyledButton } from "./Button"
+import { StyledButton } from "./Button"
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { css } from "../styles/StyleDefault"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type PropsType = {
-    cadastrar: Function
+    children: React.ReactNode,
+    cadastrar?: Function,
+    editar?: Function,
+    dataEditar?: ItemType
 }
+
+type ItemType = {
+    id: number,
+    img: string,
+    titulo: string,
+    partida: LocalType,
+    destino: LocalType
+}
+
+type LocalType = {
+    latitude: number,
+    longitude: number
+}
+
 
 function ModalCadastrar(props: PropsType) {
 
@@ -27,8 +44,10 @@ function ModalCadastrar(props: PropsType) {
     const [partida, setPartida] = useState("")
     const [destino, setDestino] = useState("")
     const [imagem, setImagem] = useState(Local1)
-
+    const [modalTitulo, setModalTitulo] = useState("Cadastrar")
+    const [modalDescricao, setModalDescricao] = useState("Cadastre uma nova rota")
     let geolocation = navigator.geolocation
+
 
     const radio = css({
         height: 80,
@@ -83,10 +102,19 @@ function ModalCadastrar(props: PropsType) {
     }
 
     function LimparForm() {
-        setDescricao("")
-        setPartida("")
-        setDestino("")
-        setImagem(Local1)
+        if (!props.dataEditar) {
+            setDescricao("")
+            setPartida("")
+            setDestino("")
+            setImagem(Local1)
+        }else{
+            setDescricao(props.dataEditar.titulo)
+            setPartida(props.dataEditar.partida.latitude + ',' + props.dataEditar.partida.longitude)
+            setDestino(props.dataEditar.destino.latitude + ',' + props.dataEditar.destino.longitude)
+            setImagem(props.dataEditar.img)
+            setModalTitulo("Editar")
+            setModalDescricao("Edite a sua rota")
+        }
     }
 
     function Cadastrar() {
@@ -104,24 +132,47 @@ function ModalCadastrar(props: PropsType) {
             }
         }
 
-        props.cadastrar(item)
+        if (props.cadastrar) {
+            props.cadastrar(item)
+        }
     }
+
+    function Editar(){
+        if(props.dataEditar){
+            
+            props.dataEditar.img = imagem
+            props.dataEditar.titulo = descricao
+            props.dataEditar.partida = {
+                latitude: +partida.split(',')[0],
+                longitude: +partida.split(',')[1]
+            }
+            props.dataEditar.destino = {
+                latitude: +destino.split(',')[0],
+                longitude: +destino.split(',')[1]
+            }
+
+        }
+
+        if(props.editar){
+            props.editar(props.dataEditar)
+        }
+    }
+
 
     return (
         <Dialog.Root onOpenChange={LimparForm}>
-            <Dialog.Trigger className={StyledButton()}>
-                <FontAwesomeIcon icon={faPlus} />
-            </Dialog.Trigger>
+
+            {props.children}
 
             <Dialog.Portal>
                 <Dialog.Overlay className={StyledOverlay()} />
                 <Dialog.Content className={StyledContent()}>
-                    <Dialog.Title className={StyledTitle()}>Cadastrar</Dialog.Title>
-                    <Dialog.Description className={StyledDescription()}>Cadastre uma nova rota</Dialog.Description>
+                    <Dialog.Title className={StyledTitle()}>{modalTitulo}</Dialog.Title>
+                    <Dialog.Description className={StyledDescription()}>{modalDescricao}</Dialog.Description>
 
                     <Fieldset>
                         <Label htmlFor="descricao">Descrição</Label>
-                        <Input id="descricao" placeholder="Ex: Casa" onChange={(e) => setDescricao(e.target.value)} value={descricao} autoComplete="off" />
+                        <Input id="descricao" placeholder="Ex: Casa" onChange={(e) => setDescricao(e.target.value)} autoComplete="off" value={descricao} />
                     </Fieldset>
 
                     <Fieldset>
@@ -152,7 +203,7 @@ function ModalCadastrar(props: PropsType) {
                         <Label>Ícone:</Label>
                     </Fieldset>
 
-                    <RadioGroup.Root defaultValue={Local1} className={group()} onValueChange={(e) => { setImagem(e) }}>
+                    <RadioGroup.Root className={group()} onValueChange={(e) => { setImagem(e) }} value={imagem}>
                         <RadioGroup.Item value={Local1} className={radio()}>
                             <img src={Local1} alt="Imagem de Casa 1" />
                         </RadioGroup.Item>
@@ -187,10 +238,10 @@ function ModalCadastrar(props: PropsType) {
                     </RadioGroup.Root>
 
                     <Dialog.Close
-                        className={StyledButton({ habilitado: descricao !== "" && partida !== "" && destino !== "" && imagem !== "" })}
-                        onClick={Cadastrar}
+                        className={StyledButton({ habilitado: descricao !== "" && partida !== "" && destino !== "" && imagem !== "", color: props.dataEditar ? "yellow" : "blue"})}
+                        onClick={props.dataEditar ? Editar : Cadastrar}
                     >
-                        Cadastrar
+                        {modalTitulo}
                     </Dialog.Close>
 
                     <Dialog.Close asChild>
